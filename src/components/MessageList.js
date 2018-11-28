@@ -14,13 +14,13 @@ class MessageList extends Component {
 
         };
 
-        this.messagesRef = this.props.firebase.database().ref('message');
+        this.messagesRef = this.props.firebase.database().ref('Messages');
     }
     componentDidMount() {
         this.messagesRef.on('child_added', snapshot => {
             const message = snapshot.val();
             message.key = snapshot.key;
-            this.setState({ message: this.state.Messages.concat(message) })
+            this.setState({ message: this.state.message.concat(message) })
         });
     }
 
@@ -29,21 +29,9 @@ class MessageList extends Component {
         this.setState({ content: e.target.value });
     }
 
-    // handleSubmit(e) {
-    //     e.preventDefault();
-    //     if (this.state.message) {
-    //         {
-    //             console.log(this.props.currentRoom)
-    //             this.messagesRef.push({
-    //                 username: this.state.username,
-    //                 content: this.state.content,
-    //             })
-    //             this.setState({ content: '' })
-    //         }
-    //     }
-    // }
 
     render() {
+        console.log(this.props.currentRoom)
         return (
             <div className="message-rooms">
                 <h1 className="room-title">{this.props.currentRoom.name}</h1>
@@ -54,13 +42,12 @@ class MessageList extends Component {
                             <li>{message.username}</li>
                             <li>{message.content}</li>
                             <li>{message.sentAt}</li>
-
-                        </div>
-                    )
+                            <li>{message.roomId}</li>
+                        </div>)
                     }
                 </ul>
-            </div >
-        )
+            </div>
+        );
     }
 }
 

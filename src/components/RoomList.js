@@ -37,7 +37,7 @@ class RoomList extends Component {
                 <h1>Chat Rooms</h1>
                 <ul>
                     {this.state.rooms.map((room, index) =>
-                        <li key={index} > {room.name}</li>
+                        <li key={index} onClick={() => this.props.setCurrentRoom(room)}> {room.name}</li>
                     )}
                 </ul>
                 <form onSubmit={(event) => this.createRoom(event)}>
