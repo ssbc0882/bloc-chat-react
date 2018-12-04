@@ -27,7 +27,6 @@ class App extends Component {
     }
   }
   setCurrentRoom(room) {
-    console.log(room.key)
     this.setState({ currentRoom: room })
   }
 
@@ -40,19 +39,26 @@ class App extends Component {
   }
 
   render() {
+
+    const showMessages = this.state.currentRoom;
+
     return (
       <div className="App">
 
         <header>
           <h1>Chat</h1>
+          <h2>{this.state.user}</h2>
+          <User firebase={firebase} setUser={(user) => this.setUser(user)} user={this.state.user} />
         </header>
         <main>
-          <RoomList firebase={firebase} setCurrentRoom={(room) => this.setCurrentRoom(room)} />
-          <MessageList firebase={firebase} currentRoom={this.state.currentRoom} />
-          <div className="display-user">
-            <h3>{this.state.user}</h3>
-          </div>
-          <User firebase={firebase} setUser={(user) => this.setUser(user)} user={this.state.user} />
+          <aside>
+            <RoomList firebase={firebase} setCurrentRoom={(room) => this.setCurrentRoom(room)} />
+          </aside>
+
+          {showMessages ?
+            <MessageList firebase={firebase} currentRoom={this.state.currentRoom} user={this.state.user} />
+            : (null)}
+
         </main>
       </div>
     );

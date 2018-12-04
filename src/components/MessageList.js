@@ -10,7 +10,7 @@ class MessageList extends Component {
             content: "",
             sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
             roomId: "",
-
+            newMessage: "",
 
         };
 
@@ -24,14 +24,29 @@ class MessageList extends Component {
         });
     }
 
-    handleChange(e) {
-        e.preventDefault();
-        this.setState({ content: e.target.value });
+    handleChange(event) {
+        event.preventDefault();
+        this.setState({
+            content: event.target.value,
+        });
+    }
+
+    createMessage(event) {
+        event.preventDefault();
+
+        this.messagesRef.push({
+            username: this.props.user,
+            content: this.state.content,
+            sentAt: Date.now(this.props.firebase.database.ServerValue.TIMESTAMP),
+            roomId: this.props.currentRoom.key,
+        });
+        console.log(this.state.content);
+        console.log(this.props.currentRoom);
+        this.setState({ content: '' });
     }
 
 
     render() {
-        console.log(this.props.currentRoom)
         return (
             <div className="message-rooms">
                 <h1 className="room-title">{this.props.currentRoom.name}</h1>
@@ -42,10 +57,15 @@ class MessageList extends Component {
                             <li>{message.username}</li>
                             <li>{message.content}</li>
                             <li>{message.sentAt}</li>
-                            <li>{message.roomId}</li>
                         </div>)
                     }
                 </ul>
+                <form onSubmit={(event) => this.createMessage(event)}>
+                    <label>Create Message:
+                    <input type="text" value={this.state.content} placeholder="enter message" onChange={(event) => this.handleChange(event)} />
+                    </label>
+                    <button type="submit">Send</button>
+                </form>
             </div>
         );
     }
