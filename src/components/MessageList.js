@@ -60,6 +60,7 @@ class MessageList extends Component {
                         </div>)
                     }
                 </ul>
+
                 <form onSubmit={(event) => this.createMessage(event)}>
                     <label>Create Message:
                     <input type="text" value={this.state.content} placeholder="enter message" onChange={(event) => this.handleChange(event)} />

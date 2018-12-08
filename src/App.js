@@ -52,7 +52,7 @@ class App extends Component {
         </header>
         <main>
           <aside>
-            <RoomList firebase={firebase} setCurrentRoom={(room) => this.setCurrentRoom(room)} />
+            <RoomList firebase={firebase} currentRoom={this.state.currentRoom} setCurrentRoom={(room) => this.setCurrentRoom(room)} />
           </aside>
 
           {showMessages ?
